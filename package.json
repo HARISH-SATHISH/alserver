@@ -1,0 +1,23 @@
+{
+  "name": "astroserver",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node build/index",
+    "build": "tsc -p .",
+    "dev": "tsc-watch --onSuccess \"npm start\""
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@apollo/server": "^4.9.5",
+    "@prisma/client": "^5.7.1",
+    "cors": "^2.8.5",
+    "graphql": "^16.8.1",
+    "prisma": "^5.7.1",
+    "tsc-watch": "^6.0.4"
+  }
+}
