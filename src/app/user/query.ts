@@ -1,3 +1,3 @@
 export const query=`#graphql
-getCurrentUser:User
+getCurrentUser(token:userdata):User
 `

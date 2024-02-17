@@ -42,7 +42,7 @@ function initServer() {
       ${blog_1.Blog.mutation}
     }
     `,
-            resolvers: Object.assign({ Query: Object.assign(Object.assign(Object.assign({ hello: () => 'Hello, GraphQL!' }, user_1.User.resolvers.quries), log_1.Log.resolvers.query), blog_1.Blog.resolvers.query), Mutation: Object.assign(Object.assign({}, log_1.Log.resolvers.mutation), blog_1.Blog.resolvers.mutation) }, user_1.User.resolvers.extraresolver)
+            resolvers: Object.assign(Object.assign({ Query: Object.assign(Object.assign(Object.assign({ hello: () => 'Hello, GraphQL!' }, user_1.User.resolvers.quries), log_1.Log.resolvers.query), blog_1.Blog.resolvers.query), Mutation: Object.assign(Object.assign({}, log_1.Log.resolvers.mutation), blog_1.Blog.resolvers.mutation) }, user_1.User.resolvers.extraresolver), log_1.Log.resolvers.extraResolvers)
         });
         yield graphqlServer.start();
         app.use('/graphql', (0, express4_1.expressMiddleware)(graphqlServer));

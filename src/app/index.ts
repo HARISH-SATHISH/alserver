@@ -40,8 +40,8 @@ export async function initServer() {
         ...Log.resolvers.mutation,
         ...Blog.resolvers.mutation
       },
-      ...User.resolvers.extraresolver
-
+      ...User.resolvers.extraresolver,
+      ...Log.resolvers.extraResolvers
     }
   });
 

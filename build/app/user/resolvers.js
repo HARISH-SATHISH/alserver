@@ -12,9 +12,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.resolvers = void 0;
 const db_1 = require("../../client/db");
 const quries = {
-    getCurrentUser: (parent) => __awaiter(void 0, void 0, void 0, function* () {
-        const user = yield db_1.prismaClient.user.findUnique({ where: { email: "harish@gmail" } });
-        return user;
+    getCurrentUser: (parent, { token }) => __awaiter(void 0, void 0, void 0, function* () {
+        const user = yield db_1.prismaClient.user.findUnique({ where: { email: token.email } });
+        if (!user) {
+            const newuser = yield db_1.prismaClient.user.create({ data: {
+                    email: token.email,
+                    name: token.name,
+                    imgUrl: token.imgUrl
+                } });
+        }
+        const userInDb = yield db_1.prismaClient.user.findUnique({ where: { email: token.email } });
+        // if(!userInDb) throw new Error('user not found')
+        // const usertoken = JWTService.generateTokenForUser(userInDb)
+        return userInDb;
     })
 };
 const extraresolver = {

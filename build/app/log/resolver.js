@@ -19,17 +19,25 @@ const query = {
 };
 const mutation = {
     createLog: (parent, { payload }) => __awaiter(void 0, void 0, void 0, function* () {
-        const log = yield db_1.prismaClient.log.create({
-            data: {
-                obj: payload.obj,
-                dateAndTime: payload.dateAndTime,
-                device: payload.device,
-                note: payload.note,
-                media: payload.media,
-                authorId: payload.authorId
-            }
-        });
-        return log;
+        const author = yield db_1.prismaClient.user.findUnique({ where: { email: payload.email } });
+        if (author === null || author === void 0 ? void 0 : author.id) {
+            const log = yield db_1.prismaClient.log.create({
+                data: {
+                    obj: payload.obj,
+                    dateAndTime: payload.dateAndTime,
+                    device: payload.device,
+                    note: payload.note,
+                    media: payload.media,
+                    authorId: author === null || author === void 0 ? void 0 : author.id
+                }
+            });
+            return log;
+        }
     })
 };
-exports.resolvers = { query, mutation };
+const extraResolvers = {
+    Log: {
+        author: (parent) => __awaiter(void 0, void 0, void 0, function* () { return yield db_1.prismaClient.user.findUnique({ where: { id: parent.authorId } }); })
+    }
+};
+exports.resolvers = { query, mutation, extraResolvers };

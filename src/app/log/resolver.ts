@@ -1,3 +1,4 @@
+import { Log } from "@prisma/client"
 import { prismaClient } from "../../client/db"
 
 interface logdata{
@@ -7,7 +8,8 @@ interface logdata{
     device:string,
     note:string,
     media:string,
-    authorId:number
+    authorId:number,
+    email:string
 }
 
 const query={
@@ -18,20 +20,29 @@ const query={
 }
 const mutation={
     createLog:async(parent:any,{payload}:{payload:logdata})=>{
-     const log=await prismaClient.log.create({
-      data:{
-        obj:payload.obj,
-        dateAndTime:payload.dateAndTime,
-        device:payload.device,
-        note:payload.note,
-        media:payload.media,
-        authorId:payload.authorId
-      }
-     })
-     return log
+      
+     const author=await prismaClient.user.findUnique({where:{email:payload.email}})
+     if(author?.id){
+      const log=await prismaClient.log.create({
+        data:{
+          obj:payload.obj,
+          dateAndTime:payload.dateAndTime,
+          device:payload.device,
+          note:payload.note,
+          media:payload.media,
+          authorId:author?.id
+        }
+      })
+      return log
+     }
     }
     
   }
+  const extraResolvers={
+    Log:{
+      author:async(parent:Log)=>{return  await prismaClient.user.findUnique({where:{id:parent.authorId}})}
+    }
+  }
   
 
-export const resolvers={query,mutation}
+export const resolvers={query,mutation,extraResolvers}

@@ -7,7 +7,8 @@ input logdata{
     device:String,
     note:String,
     media:String,
-    authorId:Int
+    authorId:Int,
+    email:String
 }
 type Log{
     id:Int
