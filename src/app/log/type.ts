@@ -2,13 +2,13 @@ export const type=`#graphql
 
 input logdata{
     
-    obj:String,
-    dateAndTime:String,
-    device:String,
-    note:String,
-    media:String,
-    authorId:Int,
-    email:String
+    obj:String!,
+    dateAndTime:String!,
+    device:String!,
+    note:String!,
+    media:String!,
+    
+    email:String!
 }
 type Log{
     id:Int
