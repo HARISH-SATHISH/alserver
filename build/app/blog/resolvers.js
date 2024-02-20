@@ -27,4 +27,9 @@ const mutation = {
         return blog;
     })
 };
-exports.resolvers = { query, mutation };
+const extraResolvers = {
+    Blog: {
+        author: (parent) => __awaiter(void 0, void 0, void 0, function* () { return yield db_1.prismaClient.user.findUnique({ where: { id: parent.authorId } }); })
+    }
+};
+exports.resolvers = { query, mutation, extraResolvers };

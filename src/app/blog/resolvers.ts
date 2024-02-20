@@ -1,5 +1,5 @@
 import { prismaClient } from "../../client/db"
-
+import {Blog} from '@prisma/client'
 interface blogData{
     title:string
     content:string
@@ -23,5 +23,11 @@ const mutation={
         return blog
     }
 }
+const extraResolvers={
+    Blog:{
+      author:async(parent:Blog)=>{return  await prismaClient.user.findUnique({where:{id:parent.authorId}})}
+    }
+  }
+  
 
-export const resolvers={query,mutation}
+export const resolvers={query,mutation,extraResolvers}
