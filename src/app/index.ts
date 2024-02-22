@@ -7,6 +7,7 @@ import { Log } from './log'
 import { Blog } from './blog'
 
 import cors from 'cors'
+import { Project } from "./project";
 
 export async function initServer() {
   const app = express()
@@ -18,11 +19,13 @@ export async function initServer() {
      ${User.type}
      ${Log.type}
      ${Blog.type}
+     ${Project.type}
     type Query{
         hello: String ,
         ${User.query},
         ${Log.query},
-        ${Blog.query}
+        ${Blog.query},
+        ${Project.query}
     }
     type Mutation{
       ${Log.mutation}
@@ -34,7 +37,8 @@ export async function initServer() {
         hello: () => 'Hello, GraphQL!',
         ...User.resolvers.quries,
         ...Log.resolvers.query,
-        ...Blog.resolvers.query
+        ...Blog.resolvers.query,
+        ...Project.resolvers.query
       },
       Mutation: {
         ...Log.resolvers.mutation,
