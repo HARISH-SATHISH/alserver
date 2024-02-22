@@ -4,6 +4,7 @@ interface blogData{
     title:string
     content:string
     authorId:number
+    email:string
 }
 
 const query={
@@ -15,12 +16,16 @@ const query={
 
 const mutation={
     createBlog:async(parent:any,{payload}:{payload:blogData})=>{
+        const user=await prismaClient.user.findUnique({where:{email:payload.email}})
+
+       if(user?.id){
         const blog= await prismaClient.blog.create({data:{
             title:payload.title,
             content:payload.content,
-            authorId:payload.authorId
+            authorId:user.id
         }})
         return blog
+       }
     }
 }
 const extraResolvers={

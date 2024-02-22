@@ -19,12 +19,15 @@ const query = {
 };
 const mutation = {
     createBlog: (parent, { payload }) => __awaiter(void 0, void 0, void 0, function* () {
-        const blog = yield db_1.prismaClient.blog.create({ data: {
-                title: payload.title,
-                content: payload.content,
-                authorId: payload.authorId
-            } });
-        return blog;
+        const user = yield db_1.prismaClient.user.findUnique({ where: { email: payload.email } });
+        if (user === null || user === void 0 ? void 0 : user.id) {
+            const blog = yield db_1.prismaClient.blog.create({ data: {
+                    title: payload.title,
+                    content: payload.content,
+                    authorId: user.id
+                } });
+            return blog;
+        }
     })
 };
 const extraResolvers = {

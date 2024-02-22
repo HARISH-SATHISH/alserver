@@ -37,3 +37,21 @@ model Blog {
   author    User    @relation(fields: [authorId], references: [id])
   authorId  Int
 }
+
+
+model Mods{
+  id Int @id @default(autoincrement())
+  pass String
+  name String
+  projects Project[]
+}
+
+model Project {
+  id Int @id @default(autoincrement())
+  title String
+  desc String
+  location String
+ 
+ mod Mods @relation(fields: [modId],references: [id] )
+ modId Int
+}

@@ -7,6 +7,7 @@ input blogData{
   title:String
   content:String
   authorId:Int
+  email:String
 }
 
 type Blog{
