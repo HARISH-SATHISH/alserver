@@ -8,6 +8,7 @@ import { Blog } from './blog'
 
 import cors from 'cors'
 import { Project } from "./project";
+import { mod } from "./mod";
 
 export async function initServer() {
   const app = express()
@@ -20,12 +21,14 @@ export async function initServer() {
      ${Log.type}
      ${Blog.type}
      ${Project.type}
+     ${mod.type}
     type Query{
         hello: String ,
         ${User.query},
         ${Log.query},
         ${Blog.query},
-        ${Project.query}
+        ${Project.query},
+        ${mod.query}
     }
     type Mutation{
       ${Log.mutation}
@@ -38,7 +41,8 @@ export async function initServer() {
         ...User.resolvers.quries,
         ...Log.resolvers.query,
         ...Blog.resolvers.query,
-        ...Project.resolvers.query
+        ...Project.resolvers.query,
+        ...mod.resolvers.query
       },
       Mutation: {
         ...Log.resolvers.mutation,

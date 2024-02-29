@@ -25,6 +25,10 @@ const quries = {
         // if(!userInDb) throw new Error('user not found')
         // const usertoken = JWTService.generateTokenForUser(userInDb)
         return userInDb;
+    }),
+    getAllUser: () => __awaiter(void 0, void 0, void 0, function* () {
+        const users = yield db_1.prismaClient.user.findMany();
+        return users;
     })
 };
 const extraresolver = {

@@ -25,6 +25,10 @@ const quries = {
     // if(!userInDb) throw new Error('user not found')
     // const usertoken = JWTService.generateTokenForUser(userInDb)
     return userInDb
+  },
+  getAllUser:async ()=>{
+    const users = await prismaClient.user.findMany()
+    return users
   }
 }
 

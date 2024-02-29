@@ -22,6 +22,7 @@ const log_1 = require("./log");
 const blog_1 = require("./blog");
 const cors_1 = __importDefault(require("cors"));
 const project_1 = require("./project");
+const mod_1 = require("./mod");
 function initServer() {
     return __awaiter(this, void 0, void 0, function* () {
         const app = (0, express_1.default)();
@@ -33,19 +34,21 @@ function initServer() {
      ${log_1.Log.type}
      ${blog_1.Blog.type}
      ${project_1.Project.type}
+     ${mod_1.mod.type}
     type Query{
         hello: String ,
         ${user_1.User.query},
         ${log_1.Log.query},
         ${blog_1.Blog.query},
-        ${project_1.Project.query}
+        ${project_1.Project.query},
+        ${mod_1.mod.query}
     }
     type Mutation{
       ${log_1.Log.mutation}
       ${blog_1.Blog.mutation}
     }
     `,
-            resolvers: Object.assign(Object.assign(Object.assign({ Query: Object.assign(Object.assign(Object.assign(Object.assign({ hello: () => 'Hello, GraphQL!' }, user_1.User.resolvers.quries), log_1.Log.resolvers.query), blog_1.Blog.resolvers.query), project_1.Project.resolvers.query), Mutation: Object.assign(Object.assign({}, log_1.Log.resolvers.mutation), blog_1.Blog.resolvers.mutation) }, user_1.User.resolvers.extraresolver), log_1.Log.resolvers.extraResolvers), blog_1.Blog.resolvers.extraResolvers)
+            resolvers: Object.assign(Object.assign(Object.assign({ Query: Object.assign(Object.assign(Object.assign(Object.assign(Object.assign({ hello: () => 'Hello, GraphQL!' }, user_1.User.resolvers.quries), log_1.Log.resolvers.query), blog_1.Blog.resolvers.query), project_1.Project.resolvers.query), mod_1.mod.resolvers.query), Mutation: Object.assign(Object.assign({}, log_1.Log.resolvers.mutation), blog_1.Blog.resolvers.mutation) }, user_1.User.resolvers.extraresolver), log_1.Log.resolvers.extraResolvers), blog_1.Blog.resolvers.extraResolvers)
         });
         yield graphqlServer.start();
         app.use('/graphql', (0, express4_1.expressMiddleware)(graphqlServer));
